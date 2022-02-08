@@ -116,8 +116,8 @@
   <body>
     <br>
     <center>
-    <span style="font-size:42px">An Efficient Reachability-Based Framework for <br> Provably Safe
-		Autonomous Navigation in Unknown Environments</span>
+    <span style="font-size:42px">Computation of Regions of Attraction for Hybrid Limit Cycles<br> 
+	    Using Reachability: An Application to Walking Robots</span>
     </center>
 
     <br><br>
@@ -125,33 +125,35 @@
        <tr>
         <td align=center width=100px>
         <center>
-        <span style="font-size:20px"><a href="http://people.eecs.berkeley.edu/~abajcsy/">Andrea Bajcsy*</a></span>
+        <span style="font-size:20px"><a href="https://jay-choi.me/">Jason J. Choi*</a></span>
         </center>
         </td>
 
         <td align=center width=100px>
         <center>
-        <span style="font-size:20px"><a href="http://people.eecs.berkeley.edu/~somil/">Somil Bansal*</a></span>
+        <span style="font-size:20px"><a href="https://www.linkedin.com/in/ayushagrawal1/">Ayush Agrawal*</a></span>
         </center>
         </td>
 
         <td align=center width=100px>
         <center>
-        <span style="font-size:20px"><a href="https://www.linkedin.com/in/eli-bronstein-757248102/">Eli Bronstein</a></span>
+        <span style="font-size:20px"><a href="https://hybrid-robotics.berkeley.edu/">Koushil Sreenath*</a></span>
+        </center>
+        </td>	       
+	       
+        <td align=center width=100px>
+        <center>
+        <span style="font-size:20px"><a href="http://hybrid.eecs.berkeley.edu/">Claire Tomlin*</a></span>
+        </center>
+        </td>	       
+	       
+        <td align=center width=100px>
+        <center>
+        <span style="font-size:20px"><a href="https://smlbansal.github.io/">Somil Bansal**</a></span>
         </center>
         </td>
 
-        <td align=center width=100px>
-        <center>
-        <span style="font-size:20px"><a href="https://sites.google.com/view/vtolani/">Varun Tolani</a></span>
-        </center>
-        </td>
 
-        <td align=center width=100px>
-        <center>
-        <span style="font-size:20px"><a href="https://people.eecs.berkeley.edu/~tomlin/">Claire Tomlin</a></span>
-        </center>
-        </td>
      </tr>
     </table>
 
@@ -160,7 +162,7 @@
        <tr>
         <td align=center width=100px>
         <center>
-        <span style="font-size:15px">University of California, Berkeley</span>
+        <span style="font-size:15px">*University of California, Berkeley, **University of Southern California, Los Angeles</span>
         </center>
         </td>
      </tr>
@@ -182,27 +184,31 @@
           <hr>
     <center><h1>Abstract</h1></center>
 
-            <br><p align='justify'>
-            Real-world autonomous vehicles often operate in
-			a priori unknown environments. Since most of these systems are
-			safety-critical, it is important to ensure they operate safely in
-			the face of environment uncertainty, such as unseen obstacles.
-			Current safety analysis tools enable autonomous systems to
-			reason about safety given full information about the state of
-			the environment a priori. However, these tools do not scale
-			well to scenarios where the environment is being sensed in real
-			time, such as during navigation tasks. In this work, we propose
-			a novel, real-time safety analysis method based on Hamilton-
-			Jacobi reachability that provides strong safety guarantees
-			despite environment uncertainty. Our safety method is planner-
-			agnostic and provides guarantees for a variety of mapping
-			sensors. We demonstrate the proposed approach in simulation
-			and on a hardware test-bed to provide safety guarantees around
-			a state-of-the-art vision-based, learning-based planner.</p>
+            <br><p align='justify'>Contact-rich robotic systems, such as legged
+robots and manipulators, are often represented as hybrid
+systems. However, the stability analysis and region-of-attraction
+computation for these systems is often challenging because of
+the discontinuous state changes upon contact (also referred to as
+state resets). In this work, we cast the computation of region-ofattraction
+as a Hamilton-Jacobi (HJ) reachability problem. This
+enables us to leverage HJ reachability tools that are compatible
+with general nonlinear system dynamics, and can formally
+deal with state and input constraints as well as bounded
+disturbances. Our main contribution is the generalization of
+HJ reachability framework to account for the discontinuous
+state changes originating from state resets, which has remained
+a challenge until now. We apply our approach for computing
+region-of-attractions for several underactuated walking robots
+and demonstrate that the proposed approach can (a) recover a
+bigger region-of-attraction than state-of-the-art approaches, (b)
+handle state resets, nonlinear dynamics, external disturbances,
+and input constraints, and (c) also provides a stabilizing
+controller for the system that can leverage the state resets for
+enhancing system stability.</p>
             <br><br>
           <hr>
          <!-- <table align=center width=550px> -->
-            <table align=center width=650>
+<!--            <table align=center width=650>
              <center><h1>Paper</h1></center>
                 <tr>
                     <!--<td width=300px align=left>-->
@@ -215,13 +221,13 @@
                   <!-- [hosted on <a href="#">arXiv</a>]</a> -->
                     </td>
               </tr>
-            </table>
-          <br>
+            </table>-->
+	  <br>
 
           <table align=center width=180px>
               <tr>
                   <td><span style="font-size:14pt"><center>
-                      <a href="https://arxiv.org/abs/1905.00532">[pdf]</a>
+                      <a href="https://arxiv.org/pdf/2201.08538.pdf">[pdf]</a>
                     </center></td>
 
                   <td><span style="font-size:14pt"><center>
@@ -257,137 +263,9 @@
 
           <center><h1>Simulation Results</h1></center>
 
-          <!-- Visualizations of Simulations -->
-          <table align=center width=900px>
-              <tr>
-                  <td width=600px>
-                    <center>
-                        <a href="./resources/images/trajectories_final.png"><img src ="./resources/images/trajectories_final.png" height="450px"></img></href></a><br> <!-- ./resources/images/results_simulation.png -->
-                  </center>
-                  </td>
-              </tr>
-                  <td width=600px>
-                    <center>
-                        <span style="font-size:14px"><i> <span style="font-weight:bold">Simulated Sensors and Planners.</span> The vehicle trajectories for the problem setting for both planners (RRT and Spline planners) and both sensors (LiDAR and Camerasensors) with the safety controller computed from each of the three candidate safety  approaches.  The  proposed  framework  is  able  to  safely  navigate  the vehicle to the goal in all cases. When the planner makes unsafe decisions,the safety controller intervenes (the states marked in red) to ensure safety.</i>
-                  </center>
-                  </td>
-              </tr>
-          </table>
-
-          	<!-- Camera Results Table -->
-			<center><style type="text/css">
-			.tg  {border-collapse:collapse;border-spacing:0;}
-			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-			.tg .tg-bq8o{background-color:#c3edf4;color:#333333;border-color:inherit;text-align:left;vertical-align:top}
-			.tg .tg-u1yq{font-weight:bold;background-color:#72bdcc;text-align:center;vertical-align:top}
-			.tg .tg-y698{background-color:#c3edf4;border-color:inherit;text-align:left;vertical-align:top}
-			.tg .tg-0lax{text-align:left;vertical-align:top}
-			.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-			</style>
-			<table class="tg" style="float:left;border:0px;margin:15px;width:510px;">
-			  <tr>
-			    <th class="tg-u1yq" colspan="5">Simulated Camera Results</th>
-			  </tr>
-			  <tr>
-			    <td class="tg-y698">Metric</td>
-			    <td class="tg-y698">Planner</td>
-			    <td class="tg-bq8o">HJI-VI</td>
-			    <td class="tg-bq8o">Warm</td>
-			    <td class="tg-bq8o">Local</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0lax" rowspan="2"><br>Average Compute Time (s)</td>
-			    <td class="tg-0lax">RRT</td>
-			    <td class="tg-0lax">45.688</td>
-			    <td class="tg-0lax">26.290</td>
-			    <td class="tg-0lax">0.596</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0pky">Spline</td>
-			    <td class="tg-0pky">51.723</td>
-			    <td class="tg-0pky">12.489</td>
-			    <td class="tg-0pky">0.898</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0pky" rowspan="2"><br>% Over-conservative States</td>
-			    <td class="tg-0pky">RRT</td>
-			    <td class="tg-0pky">0.0</td>
-			    <td class="tg-0pky">1.112</td>
-			    <td class="tg-0pky">0.517</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0lax">Spline</td>
-			    <td class="tg-0lax">0.0</td>
-			    <td class="tg-0lax">0.474</td>
-			    <td class="tg-0lax">0.506</td>
-			  </tr>
-			</table></center>
-
-
-			<!-- Lidar Results -->
-			<center><style type="text/css">
-			.tg  {border-collapse:collapse;border-spacing:0;}
-			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
-			.tg .tg-zlqz{font-weight:bold;background-color:#9e76bf;border-color:inherit;text-align:center;vertical-align:top}
-			.tg .tg-bq88{background-color:#e8ccff;color:#333333;border-color:inherit;text-align:left;vertical-align:top}
-			.tg .tg-y699{background-color:#e8ccff;border-color:inherit;text-align:left;vertical-align:top}
-			.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
-			</style>
-			<table class="tg" style="float: right;border:0px;margin:15px;width:510px;">
-			  <tr>
-			    <th class="tg-zlqz" colspan="5">Simulated LiDAR Results</th>
-			  </tr>
-			  <tr>
-			    <td class="tg-y699">Metric</td>
-			    <td class="tg-y699">Planner</td>
-			    <td class="tg-bq88">HJI-VI</td>
-			    <td class="tg-bq88">Warm</td>
-			    <td class="tg-bq88">Local</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0pky" rowspan="2"><br>Average Compute Time (s)</td>
-			    <td class="tg-0pky">RRT</td>
-			    <td class="tg-0pky">21.145</td>
-			    <td class="tg-0pky">6.075</td>
-			    <td class="tg-0pky">1.108</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0pky">Spline</td>
-			    <td class="tg-0pky">25.318</td>
-			    <td class="tg-0pky">3.789</td>
-			    <td class="tg-0pky">1.158</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0pky" rowspan="2"><br>% Over-conservative States</td>
-			    <td class="tg-0pky">RRT</td>
-			    <td class="tg-0pky">0.0</td>
-			    <td class="tg-0pky">0.032</td>
-			    <td class="tg-0pky">0.290</td>
-			  </tr>
-			  <tr>
-			    <td class="tg-0pky">Spline</td>
-			    <td class="tg-0pky">0.0</td>
-			    <td class="tg-0pky">0.024</td>
-			    <td class="tg-0pky">0.240</td>
-			  </tr>
-			</table></center>
-
-          <table align=center width=900px>
-          		<td width=600px>
-                    <center>
-                        <span style="font-size:14px"><i> <span style="font-weight:bold">Computational Results.</span> Numerical  comparison  of  average  compute  time  and  relative volume  of  over-conservative  states  for  each  planner  and  sensor  across different BRS update methods. Local updates compute an almost exact BRS in approximately 1 second, and are significantly faster than both HJI-VI and warm-start.</i>
-                  </center>
-                  </td>
-          </table>
-          <br>
- 
-          <hr>
-          <center><h1>Experiment Videos</h1></center>
           <!-- <center> -->
-            <p align='justify'> We test the proposed approach in hardware using a TurtleBot 2 with a mounted stereo RGB camera. For planning, we use a state-of-the-art neural-network-based planner that uses the current RGB image to determine a candidate next state. We ran the experiment with and without the safety controller and show corresponding videos below. Without the safety controller, the learning-based planner struggles with making sharp turns near the corner, and eventually collides into the obstacle (the chair, in this case). However, when the learning-based planner is used within the proposed safety framework, the safety controller is able to account for this unsafe situation and safely steer the vehicle away from the obstacle.
-            </p>
+          <!-- <p align='justify'> We test the proposed approach in hardware using a TurtleBot 2 with a mounted stereo RGB camera. For planning, we use a state-of-the-art neural-network-based planner that uses the current RGB image to determine a candidate next state. We ran the experiment with and without the safety controller and show corresponding videos below. Without the safety controller, the learning-based planner struggles with making sharp turns near the corner, and eventually collides into the obstacle (the chair, in this case). However, when the learning-based planner is used within the proposed safety framework, the safety controller is able to account for this unsafe situation and safely steer the vehicle away from the obstacle.
+            </p> -->
           <!-- </center> -->
           <br>
           <table align=center width=1000px>
@@ -405,21 +283,6 @@
                   </center>
                   </td>
               </tr>
-              <br>
-              <tr>
-                  <td width=800px>
-                    <center>
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/O2zuBNCJIYw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>
-                  </center>
-                  </td>
-              </tr>
-              <td width=800px>
-                    <center>
-                        <span style="font-size:14px"><i> <span style="font-weight:bold">Experiment 2: Safety.</span> When the learning-based planner is used with the proposed safety framework, the robot is able to make goal-directed decisions while being collision-free.</i>
-                        <br><br><br>
-                  </center>
-                  </td>
-              </tr>
           </table>
 
 
@@ -430,7 +293,7 @@
                     <td>
                       <left>
                 <center><h1>Acknowledgements</h1></center>
-                This research is supported in part by the DARPA Assured Autonomy program under agreement number FA8750-18-C-0101, by NSF under the CPS Frontier project VeHICaL project (1545126), and by SRC under the CONIX Center.
+                This research is supported in part by  National Science Foundation Grants CMMI-1931853, CMMI-1944722, NASA under the University Leadership Initiative (\#80NSSC20M0163), and the DARPA Assured Autonomy Program. The work of Jason Choi received the support of a fellowship from Kwanjeong Educational Foundation, Korea.
                 <br>
                 <br>
                 This webpage template was borrowed from some <a href="https://richzhang.github.io/colorization/">colorful folks</a>.
