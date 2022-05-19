@@ -25,7 +25,7 @@
         width: 1100px;
     }
 
-    h1 {
+    h1, h2 {
         font-weight:300;
     }
 
@@ -241,30 +241,275 @@ handle state resets, nonlinear dynamics, external disturbances,
 and input constraints, and (c) also provides a stabilizing
 controller for the system that can leverage the state resets for
 enhancing system stability.</p>
-            <br>
-          <hr>
-	  
-          <center><h1>Simulation Results</h1></center>
-
+<br>
+<br>
+<hr>
+          <center><h1>Motivation</h1></center>
+          <p align='justify'>Many robotic systems are complicated by their <span style="font-weight:bold"> Hybrid System nature due to contacts</span>. In this work, we are interested in attaining stable walking behaviors for legged robots from various configurations. In doing so, it is desirable that the robot leverages contacts with the ground for enhancing its stability.
+          </p>          
           <table align=center width=900px>
             <tr>
                 <td width=640px>
                   <center>
-                      <a href="./resources/images/rimless_wheel_brt.png"><img src ="./resources/images/rimless_wheel_brt.png"></img></href></a><br> <!-- ./resources/images/results_simulation.png -->
+                      <a href="./resources/images/hybrid_robotic_systems.png"><img src ="./resources/images/hybrid_robotic_systems.png"></img></href></a><br> <!-- ./resources/images/results_simulation.png -->
                 </center>
                 </td>
               </tr>
               <tr>
             <td width=640px>
               <center>
-                  <span style="font-size:14px"><i> <span style="font-weight:bold">Regions of Attraction (RoA) for the rimless wheel limit cycle (black):
-                  </span> 
-                  (Left) The true RoA is shown in light pink. RoA obtained using SOS programming is shown in purple. (Right) RoA computed using our approach. The proposed approach is able to recover the entire RoA. (Left is reproduced from <a href="https://arxiv.org/pdf/1010.2247.pdf">Manchester et al., Regions of attraction for hybrid limit cycles of walking robots</a>.)</center>
+                  <span style="font-size:14px"><i> <span style="font-weight:bold">Examples of hybrid robotics systems.
+                  </span> Hybrid system, roughly speaking is any system that cannot be described by one mode of dynamics. Robots that people are really excited to use for practical applications these days are mostly hybrid systems, due to their nature of interacting with the environment through contacts, impacts or due to many other factors. Examples of such systems include Legged robots, humanoids, aerial vehicles, manipulators with grasping, and multi-robot tasks. (Image sources: Stanford, Kuka, Skydio, UofT, OpenAI, MIT, Boston Dynamics)
+</center>
             </td>
             </tr>
         </table>
 
-          <!-- <table align=center width=900px>
+        <p align='justify'>We aim to achieve this by solving an optimal control problem for the hybrid system models that describe the walking motion of legged robots. The main challenge is that constructive methods for solving this based on the Dynamic Programming are well established for continuous systems, however, are scarcely developed for contact-rich systems.
+        </p>
+
+          <br>
+          <br>
+          <hr>
+          <center><h1>Main Idea</h1></center>
+          <p align='justify'>First, stabilizing the walking motion is translated into a reachability problem where the target set is the walking gait.          
+          </p>
+          <table align=center width=900px>
+            <tr>
+                <td width=640px>
+                  <center>
+                      <a href="./resources/images/hybrid_roa.svg"><img src ="./resources/images/hybrid_roa.svg"></img></href></a><br> <!-- ./resources/images/results_simulation.png -->
+                </center>
+                </td>
+              </tr>
+              <tr>
+            <td width=640px>
+              <center>
+                  <span style="font-size:14px"><i> <span style="font-weight:bold">Examples of hybrid robotics systems.
+                  </span> Hybrid system, roughly speaking is any system that cannot be described by one mode of dynamics. Robots that people are really excited to use for practical applications these days are mostly hybrid systems, due to their nature of interacting with the environment through contacts, impacts or due to many other factors. Examples of such systems include Legged robots, humanoids, aerial vehicles, manipulators with grasping, and multi-robot tasks. (Image sources: Stanford, Kuka, Skydio, UofT, OpenAI, MIT, Boston Dynamics)
+</center>
+            </td>
+            </tr>
+        </table>
+        <p align='justify'>Then, to solve this reachability problem, existing Dynamic Programming reachability frameworks are extended to hybrid systems with discontinuous reset maps by incorporating the <span style="font-weight:bold">Value Remapping principle</span> in the algorithm. The main idea of the value remapping is that the value function at a pre-reset state (those on the switching surface) is same as the value function at the post-reset state. This value remapping is the bellman principle of optimality with respect to the discrete transition of the hybrid dynamics. Finally, the value remapping does not increase the computational complexity to the existing algorithm.                  
+        </p>
+        <table align=center width=900px>
+          <tr>
+              <td width=640px>
+                <center>
+                    <a href="./resources/images/value_remapping.svg"><img src ="./resources/images/value_remapping.svg"></img></href></a><br> <!-- ./resources/images/results_simulation.png -->
+              </center>
+              </td>
+            </tr>
+            <tr>
+          <td width=640px>
+            <center>
+                <span style="font-size:14px"><i> <span style="font-weight:bold">Cartoon description of the value remapping principle.
+                </span> The plane S indicates switching surface, the set of states where the discrete transition is applied defined by the reset map. For a walking robot, the reset map is defined by the ground impact, and the switching surface captures all the states where the swing foot hits the ground. The plane S+ indicates the image of the reset map. The main idea of the value remapping is that the value function at a pre-reset state (those on the switching surface) is same as the value function at the post-reset state.
+</center>
+          </td>
+          </tr>
+      </table>
+          <br>
+          <hr>
+          <br>
+
+          <center><h1>Simulation Results</h1></center>
+
+          <table align=center width=900px>
+            <tr>
+                <td width=640px>
+                  <center>
+                      <a href="./resources/images/system_configurations.svg"><img src ="./resources/images/system_configurations.svg"></img></href></a><br> 
+                </center>
+                </td>
+              </tr>
+              <tr>
+            <td width=640px>
+              <center>
+                  <span style="font-size:14px"><i> <span style="font-weight:bold"> (a) Rimless wheel system. </span> 
+                  <span style="font-size:14px"><i> <span style="font-weight:bold"> (b) Teleporting Dubins car system. </span> The car “teleports” to the other side of the x-axis whenever it hits the x-axis from a positive y-direction.
+                    <span style="font-size:14px"><i> <span style="font-weight:bold"> (c) Two-link Compass-gait walker. The pink indicates the stance leg, and the blue indicates the swing leg. </span></center>
+            </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <center><h2>Rimless wheel</h2></center>        
+        <p align='justify'>The rimless wheel is a popular model of a passivedynamic walker. One of the reasons for its popularity is that
+          RoA can be computed analytically for the rimless wheel. Using the SOS programming, we are able to recover only a subset of the RoA. Our approach is able to recover the entire RoA of the system. </p>
+
+  
+
+        <table align=center width=900px>
+          <tr>
+              <td width=640px>
+                <center>
+                    <a href="./resources/images/rimless_wheel_brt.png"><img src ="./resources/images/rimless_wheel_brt.png"></img></href></a><br> <!-- ./resources/images/results_simulation.png -->
+              </center>
+              </td>
+            </tr>
+            <tr>
+          <td width=640px>
+            <center>
+                <span style="font-size:14px"><i> <span style="font-weight:bold">Regions of Attraction (RoA) for the rimless wheel limit cycle (black):
+                </span> 
+                (Left) The true RoA is shown in light pink. RoA obtained using SOS programming is shown in purple. (Right) RoA computed using our approach. The proposed approach is able to recover the entire RoA. (Left is reproduced from <a href="https://arxiv.org/pdf/1010.2247.pdf">Manchester et al., Regions of attraction for hybrid limit cycles of walking robots</a>.)</center>
+          </td>
+          </tr>
+      </table>
+      <br>
+      <br>
+        <center><h2>Teleporting Dubins Car</h2></center>
+        <p align='justify'>
+          We introduce state resets to a well-known Dubins car system which makes the car “teleport”. The key principles of our method are well exposed in its design and results. Whenever the car hits the x-axis, it will reset to the other side of the state space. The reference periodic orbit is a semicircular trajectory centered at the origin rotating in the counter-clockwise direction. The reset map has the contraction property, so it will be desirable to exploit this reset or "teleport" to reach the target faster.
+        </p>
+        <p align='justify'>We can first compute the Regions of Attraction (RoA) of the orbit, by computing the reachability value function backward in time based on our numerical algorithm.</p>
+        <table align=center width=900px>
+          <tr>
+              <td width=900px>
+                <center>
+                    <a href="./resources/images/dubins_car_brt_evolution.gif"><img src ="./resources/images/dubins_car_brt_evolution.gif"></img></href></a><br> 
+              </center>
+              </td>
+            </tr>
+            <tr>
+          <td width=900px>
+            <center>
+                <span style="font-size:14px"><i> <span style="font-weight:bold">Regions of Attraction (RoA) for the Teleporting Dubins Car: </span> Our algorithm verifies the RoA of the orbit (in blue) by solving the dynamic programming backward in time. Thus, the verified RoA gradually expands from the orbit as we run our algorithm. Note that a big portion of the region near the switching surface (x-axis) is captured in the RoA, since the "teleport" is more accessible to the states in this region.
+                </center>
+          </td>
+          </tr>
+      </table>
+
+      <p align='justify'> Then, for an initial state that is included in the computed RoA, when we evaluate the optimal controller resulting from the computed value function, the trajectory is able to reach the orbit in the most time-optimal way. 
+      </p>
+
+      <table align=center width=900px>
+        <tr>
+            <td width=900px>
+              <center>
+                  <a href="./resources/images/Dubins_car_opt_ctrl_with_arrows.gif"><img src ="./resources/images/Dubins_car_opt_ctrl_with_arrows.gif"></img></href></a><br> 
+            </center>
+            </td>
+          </tr>
+          <tr>
+        <td width=900px>
+          <center>
+              <span style="font-size:14px"><i> <span style="font-weight:bold">The optimal trajectory computed from our method reaches the target set after 4.3s by exploiting the teleport twice.</span> 
+              </center>
+        </td>
+        </tr>
+    </table>
+
+    <p align='justify'> In contrast, a baseline controller designed based on feedback linearization takes significantly longer time to reach the orbit, since it does not have the knowledge of how to utilize the teleport.
+    </p>
+
+    <table align=center width=900px>
+      <tr>
+          <td width=900px>
+            <center>
+                <a href="./resources/images/Dubins_car_feedback_linearization.gif"><img src ="./resources/images/Dubins_car_feedback_linearization.gif"></img></href></a><br> 
+          </center>
+          </td>
+        </tr>
+        <tr>
+      <td width=900px>
+        <center>
+            <span style="font-size:14px"><i> <span style="font-weight:bold">The feedback-linearization-based controller reaches the target set after 11.9s. It does not know how to exploit the reset map.</span> 
+            </center>
+      </td>
+      </tr>
+  </table>
+  <br>
+  <br>
+  <center><h2>Two-link Compass-gait Walker</h2></center>
+  <p align='justify'> We next consider a compass-gait walker, which consists of two links with an actuated joint between them. We consider a hybrid model of walking, with alternating phases of a continuous-time singlesupport phase followed by an instantaneous inelastic impact of the swing leg with the ground. The switching surface is defined as the set of states where the swing foot strikes the ground with a negative velocity.
+  </p>
+
+  <p align='justify'> The target hybrid limit cycle we wish to stabilize to is designed as a reference walking gait, which is tracked by a baseline controller designed based on feedback linearization and Control Lyapunov Function-based Quardartic Program (CLF-QP).
+  </p>  
+
+  <table align=center width=900px>
+    <tr>
+        <td width=900px>
+          <center>
+              <a href="./resources/images/sim_and_phase_reference_gait.gif"><img src ="./resources/images/sim_and_phase_reference_gait.gif"></img></href></a><br> 
+        </center>
+        </td>
+      </tr>
+      <tr>
+    <td width=900px>
+      <center>
+          <span style="font-size:14px"><i> <span style="font-weight:bold">The robot in the nominal walking motion under the CLF-QP baseline controller. Left is the corresponding phase portrait in the configuration space.</span> 
+          </center>
+    </td>
+    </tr>
+</table>
+
+<p align='justify'> Now let’s say someone pushed the robot hard so it shifted to this new initial state that is quite far from the usual walking motion. On the perturbed initial state, The robot has a big momentum to the backward direction. If we apply the same baseline controller from this state, it fails to stabilize to the walking gait.
+</p>  
+
+<table align=center width=900px>
+  <tr>
+      <td width=900px>
+        <center>
+            <a href="./resources/images/sim_and_phase_case1_clf_qp.gif"><img src ="./resources/images/sim_and_phase_case1_clf_qp.gif"></img></href></a><br> 
+      </center>
+      </td>
+    </tr>
+    <tr>
+  <td width=900px>
+    <center>
+        <span style="font-size:14px"><i> <span style="font-weight:bold">The baseline controller failing to stabilize back to the walking motion from a largely perturbed initial state.</span>
+        </center>
+  </td>
+  </tr>
+</table>
+
+<p align='justify'> If we apply the optimal controller computed from our method to the same initial state, the robot is able to successfully stabilize back to the walking gait. Notice that it steps on the ground first, and exploit the ground impact to absorb the adverse momentum to stabilize the robot more easily.
+</p>  
+
+<table align=center width=900px>
+  <tr>
+      <td width=900px>
+        <center>
+            <a href="./resources/images/sim_and_phase_case1_opt_ctrl.gif"><img src ="./resources/images/sim_and_phase_case1_opt_ctrl.gif"></img></href></a><br> 
+      </center>
+      </td>
+    </tr>
+    <tr>
+  <td width=900px>
+    <center>
+        <span style="font-size:14px"><i> <span style="font-weight:bold">The optimal controller recovering to the gait from the same perturbation.
+        </span>
+        </center>
+  </td>
+  </tr>
+</table>
+
+<p align='justify'> Finally, we can also visualize the Region of Attractions verified from our method. First, we apply our method to the closed loop dynamics of the baseline controller. Although it is designed to be locally stabilizing, the verified RoA comprises only a small neighborhood of the reference gait. By contrast, exploiting the full control capacity limited by the torque saturation and the reset map, we are able to verify that the actual stabilizable region is much bigger than what can be achieved by the CLF-QP controller. Finally, we can also introduce disturbance to the robot’s dynamics: an unmodeled repulsive or stiction torque applied to the joint between the leg. The RoA computed under the robust optimal control setting is visualized next. Since now we only verify states that are robustly stabilizable to the gait, the resulting RoA is smaller than the non-robust RoA. However, it still shows that by applying the robust optimal controller, it is able to robustly stabilize a larger set of states than the CLF-QP.
+</p> 
+
+<table align=center width=900px>
+  <tr>
+      <td width=640px>
+        <center>
+            <a href="./resources/images/compass_gait_brt_comparison.jpg"><img src ="./resources/images/compass_gait_brt_comparison.jpg"></img></href></a><br> 
+      </center>
+      </td>
+    </tr>
+    <tr>
+  <td width=640px>
+    <center>
+        <span style="font-size:14px"><i> <span style="font-weight:bold">RoAs for the compass-gait walker visualized by their projection on the configuraion space.
+        </span> (a) RoA for the closed-loop dynamics under the CLF-QP controller. (b) RoA that is verified by allowing the full control capacity. (c) Robust RoA by introducing the disturbance to the dynamics. 
+        </center>
+  </td>
+  </tr>
+</table>
+
+<!-- <table align=center width=900px>
             <tr>
                 <td width=640px>
                   <video width="640" height="360" controls>
